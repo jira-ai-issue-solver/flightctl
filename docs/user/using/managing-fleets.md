@@ -206,7 +206,15 @@ subjects:
   namespace: <flightctl-namespace>
 ```
 
-Note: Both the Role/ClusterRole and its corresponding RoleBinding/ClusterRoleBinding are required for authentication and authorization. The Role or ClusterRole defines the permissions, while the Binding grants those permissions to the service account. When deciding whether to centralize RBAC management, consider using `Role` and `RoleBinding` for namespace-scoped access (more secure, better isolation) and `ClusterRole` with `ClusterRoleBinding` for cluster-wide access or when accessing resources across multiple namespaces (more efficient for centralized management).
+**Note on Roles and Bindings:**
+
+Both a `Role` (or `ClusterRole`) and a corresponding `RoleBinding` (or `ClusterRoleBinding`) are required for the service account to be authorized.
+*   The **Role** or **ClusterRole** defines *what* actions are allowed (e.g., `get` secrets).
+*   The **RoleBinding** or **ClusterRoleBinding** grants those permissions to a specific service account.
+
+When deciding which to use:
+*   Use a `Role` and `RoleBinding` for namespace-scoped access. This is more secure and provides better isolation.
+*   Use a `ClusterRole` and `ClusterRoleBinding` for cluster-wide access or when accessing secrets across many namespaces. This can be more efficient to manage.
 
 **Best Practices for Cross-Namespace Access:**
 
